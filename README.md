@@ -1,178 +1,153 @@
-# AI Customer Support Platform
+# 🤖 AI Customer Support Chatbot
 
-A full-stack AI-style customer support chat application built using **FastAPI (Python)** for the backend and **Next.js (React + TypeScript)** for the frontend.
-
-This project demonstrates how modern AI-powered support systems can be structured using a conversational interface, session-based memory, and scalable APIs.
-
-For demonstration purposes, the application currently uses **mock AI responses**, allowing the project to run without requiring external API billing.
+A full-stack AI-powered customer support application that provides real-time responses to user queries such as password resets, refunds, orders, payments, and cancellations.
 
 ---
 
-## Features
+## 🚀 Live Demo
 
-- AI-style customer support chat interface  
-- Real-time communication between frontend and backend  
-- Session-based conversation memory  
-- REST API built with FastAPI  
-- Next.js modern frontend UI  
-- Mock AI responses for demonstration and testing  
-- Modular architecture ready for real AI integration  
+* 🌐 Frontend (Vercel): https://ai-customer-support-fbdyygvhk-vilas2809s-projects.vercel.app
+* ⚙️ Backend (Render): https://ai-customer-support-mq3q.onrender.com
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
-- Next.js
-- React
-- TypeScript
-- CSS
+
+* Next.js (React)
+* TypeScript
+* CSS / Tailwind (if used)
 
 ### Backend
-- FastAPI
-- Python
-- Pydantic
-- Uvicorn
 
-### Development Tools
-- Node.js
-- npm
-- Git
+* FastAPI (Python)
+* Groq API (LLM integration)
+* Pydantic
+* Uvicorn
 
----
+### Deployment
 
-## Project Structure
-
-```
-ai-customer-support
-│
-├── backend
-│   ├── app
-│   │   └── main.py
-│   └── requirements.txt
-│
-├── frontend
-│   ├── app
-│   │   ├── page.tsx
-│   │   ├── layout.tsx
-│   │   └── globals.css
-│   └── package.json
-│
-├── .gitignore
-└── README.md
-```
+* Vercel (Frontend)
+* Render (Backend)
 
 ---
 
-## Installation
+## ✨ Features
 
-Clone the repository:
+* 💬 Real-time AI chat interface
+* 🤖 LLM-powered responses using Groq API
+* 🔗 Full-stack integration (Next.js + FastAPI)
+* 🌐 Deployed on cloud (Vercel + Render)
+* 🔐 CORS-enabled secure API communication
+* ⚡ Fast and responsive UI
 
-```bash
-git clone https://github.com/Vilas2809/ai-customer-support.git
+---
+
+## ⚙️ Setup Instructions
+
+### 1️⃣ Clone the repository
+
+git clone https://github.com/your-username/ai-customer-support.git
 cd ai-customer-support
-```
 
 ---
 
-## Backend Setup
+### 2️⃣ Backend Setup (FastAPI)
 
-Navigate to the backend folder:
-
-```bash
 cd backend
-```
+python -m venv venv
+source venv/bin/activate   (Mac/Linux)
+venv\Scripts\activate      (Windows)
 
-Create a virtual environment:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
 pip install -r requirements.txt
-```
 
-Run the FastAPI server:
+#### Create `.env` file
 
-```bash
+GROQ_API_KEY=your_api_key_here
+FRONTEND_URL=http://localhost:3000
+
+#### Run backend
+
 uvicorn app.main:app --reload
-```
-
-Backend will run on:
-
-```
-http://127.0.0.1:8000
-```
-
-API documentation:
-
-```
-http://127.0.0.1:8000/docs
-```
 
 ---
 
-## Frontend Setup
+### 3️⃣ Frontend Setup (Next.js)
 
-Open a new terminal and navigate to the frontend folder:
-
-```bash
 cd frontend
-```
-
-Install dependencies:
-
-```bash
 npm install
-```
-
-Run the development server:
-
-```bash
 npm run dev
-```
-
-Frontend will run on:
-
-```
-http://localhost:3000
-```
 
 ---
 
-## How It Works
+## 🔗 API Endpoints
 
-1. The user enters a message in the chat interface.
-2. The frontend sends the request to the FastAPI backend.
-3. The backend processes the request and generates a response.
-4. A mock AI reply is returned to the frontend.
-5. The chat interface displays the response.
+### POST `/chat`
 
----
+**Request:**
+{
+"conversation_id": "test123",
+"message": "Hello"
+}
 
-## Future Improvements
-
-- Integrate real LLM APIs (OpenAI, Claude, etc.)
-- Add authentication system
-- Store chat history in a database
-- Implement streaming responses
-- Deploy backend and frontend to cloud platforms
+**Response:**
+{
+"reply": "Hello. How can I assist you today?"
+}
 
 ---
 
-## Author
+## 🚨 CORS Configuration
 
-**Vilas Srirama Reddy**
-
-GitHub:  
-https://github.com/Vilas2809
+allow_origins = [
+"https://ai-customer-support-fbdyygvhk-vilas2809s-projects.vercel.app",
+"http://localhost:3000"
+]
 
 ---
 
-## License
+## 📦 Deployment
 
-This project is for educational and demonstration purposes.
+### Frontend (Vercel)
+
+* Connected GitHub repo
+* Auto deployment enabled
+
+### Backend (Render)
+
+* requirements.txt configured
+* Start command:
+  uvicorn app.main:app --host 0.0.0.0 --port 10000
+
+---
+
+## 🧠 Learnings
+
+* Full-stack development with Next.js and FastAPI
+* API integration and async handling
+* Debugging production issues (CORS)
+* Cloud deployment and environment configuration
+* Working with LLM APIs (Groq)
+
+---
+
+## 📌 Future Improvements
+
+* 🔐 User authentication (login/signup)
+* 💾 Database integration (store chat history)
+* 🎨 Improved UI/UX (animations, typing effect)
+* 📊 Analytics dashboard
+
+---
+
+## 👨‍💻 Author
+
+Vilas Reddy
+GitHub: https://github.com/Vilas2809
+
+---
+
+## ⭐️ Show Your Support
+
+If you like this project, give it a ⭐️ on GitHub!
