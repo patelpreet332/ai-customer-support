@@ -16,7 +16,7 @@ client = Groq(api_key=GROQ_API_KEY)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[""], 
+    allow_origins=["*"], 
     allow_methods=["*"],
     allow_headers=["*"],
 )
