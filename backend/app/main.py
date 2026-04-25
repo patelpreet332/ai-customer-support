@@ -16,7 +16,8 @@ client = Groq(api_key=GROQ_API_KEY)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=["https://ai-customer-support-fbdyygvhk-vilas2809s-projects.vercel.app",
+                   "http://localhost:3000"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
