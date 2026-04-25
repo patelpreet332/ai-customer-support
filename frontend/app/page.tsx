@@ -10,11 +10,15 @@ type ChatMessage = {
 const API_URL =  "https://ai-customer-support-mq3q.onrender.com";
 
 export default function Home() {
-  const [conversationId] = useState(() => crypto.randomUUID());
+  const [conversationId , setConversationId] = useState("");
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+      setConversationId(crypto.randomUUID());
+  }, []);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -42,6 +46,7 @@ export default function Home() {
       });
 
       if (!res.ok) {
+        console.error("Backend error:", await res.text());
         throw new Error("Backend request failed");
       }
 
