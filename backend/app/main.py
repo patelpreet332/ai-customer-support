@@ -16,7 +16,7 @@ client = Groq(api_key=GROQ_API_KEY)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL],  # use exact frontend URL in production
+    allow_origins=[""],  # use exact frontend URL in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
