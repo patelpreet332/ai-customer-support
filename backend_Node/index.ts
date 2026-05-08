@@ -39,44 +39,47 @@ app.post('/chat', async (req, res) => {
     try {
         let conversation = await Conversation.findOne({ conversation_id: id });
 
-        // 1. CONTEXT ENHANCEMENT (Lookup Order Data by ID or Email in History)
+        // 1. CONTEXT ENHANCEMENT (Lookup Order Data with Security Filtering)
         let combinedText = userMessage;
         if (conversation) {
             combinedText += " " + conversation.messages.map(m => m.content).join(" ");
         }
 
         let foundOrder: any = null;
-
-        // Search for Order ID in CURRENT message only
         const orderIdMatch = userMessage.match(/ORD-2026-\d+/i);
-        // Search for Email in history or current message
         const emailMatch = combinedText.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
 
-        if (orderIdMatch || emailMatch || user_email) {
+        // Security Policy: Prioritize session email, fallback to chat email ONLY if anonymous
+        const sessionEmail = user_email?.toLowerCase();
+        const chatEmail = emailMatch ? emailMatch[0].toLowerCase() : null;
+        const effectiveEmail = sessionEmail || chatEmail;
+
+        if (orderIdMatch || effectiveEmail) {
             let orderData: any = null;
-            let query: any = {};
 
             if (orderIdMatch) {
-                // If user specifically mentions an ID in this message, zoom in
-                query = {
-                    orderId: orderIdMatch[0].toUpperCase(),
-                    "customer.email": user_email ? user_email.toLowerCase() : { $exists: true }
-                };
-                orderData = await mongoose.connection.db!.collection('orders').findOne(query);
-            } else {
-                // Otherwise, keep the full history visible
-                const targetEmail = emailMatch ? emailMatch[0] : user_email;
-                if (targetEmail) {
-                    query = { "customer.email": targetEmail.toLowerCase() };
-                    orderData = await mongoose.connection.db!.collection('orders').find(query).toArray();
+                // --- SCENARIO: Specific Order Lookup ---
+                // REQUIRE an email (session or provided) to prevent Order ID guessing
+                if (effectiveEmail) {
+                    orderData = await mongoose.connection.db!.collection('orders').findOne({
+                        orderId: orderIdMatch[0].toUpperCase(),
+                        "customer.email": effectiveEmail
+                    });
                 }
+            } else if (effectiveEmail) {
+                // --- SCENARIO: History Lookup ---
+                // If logged in, ONLY show orders for the session email
+                // If anonymous, only show orders for the provided chat email
+                orderData = await mongoose.connection.db!.collection('orders').find({ 
+                    "customer.email": effectiveEmail 
+                }).toArray();
             }
 
             if (orderData && (Array.isArray(orderData) ? orderData.length > 0 : true)) {
                 foundOrder = orderData;
-                console.log(`[DB-LOG] SUCCESS: Data retrieved for ${query["customer.email"] || query.orderId}`);
+                console.log(`[SECURITY-LOG] SUCCESS: Secured data retrieved for ${effectiveEmail}`);
             } else {
-                console.log(`[DB-LOG] WARNING: No data found for query:`, query);
+                console.log(`[SECURITY-LOG] ACCESS DENIED/NOT FOUND: Query for ${effectiveEmail}`);
             }
         }
 
