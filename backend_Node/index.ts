@@ -70,8 +70,8 @@ app.post('/chat', async (req, res) => {
                 // --- SCENARIO: History Lookup ---
                 // If logged in, ONLY show orders for the session email
                 // If anonymous, only show orders for the provided chat email
-                orderData = await mongoose.connection.db!.collection('orders').find({ 
-                    "customer.email": effectiveEmail 
+                orderData = await mongoose.connection.db!.collection('orders').find({
+                    "customer.email": effectiveEmail
                 }).toArray();
             }
 
@@ -87,12 +87,12 @@ app.post('/chat', async (req, res) => {
 
         // 2. AI Processing (Phase 5: Sentiment & Phase 6: Multilingual)
         const aiResponse = await aiOrchestrator.handleMessage(
-            userMessage, 
-            { 
-                conversationId: id, 
+            userMessage,
+            {
+                conversationId: id,
                 history: history as any,
                 language: preferredLanguage
-            }, 
+            },
             foundOrder
         );
 
