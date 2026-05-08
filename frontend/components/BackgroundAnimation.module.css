@@ -1,0 +1,127 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -50;
+  overflow: hidden;
+  background-color: #f8fafc;
+  pointer-events: none;
+}
+
+/* Gradient Mesh Lighting */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 10% 10%, rgba(96, 165, 250, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 90% 90%, rgba(167, 139, 250, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 10%, rgba(34, 211, 238, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 20% 80%, rgba(196, 181, 253, 0.1) 0%, transparent 40%);
+  z-index: 1;
+}
+
+/* Noise texture for premium feel */
+.container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.04;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  filter: contrast(150%) brightness(100%);
+  z-index: 10;
+}
+
+.shape {
+  position: absolute;
+  opacity: 0.4;
+  will-change: transform;
+  z-index: 5;
+}
+
+/* Circles */
+.circle {
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(34, 211, 238, 0.3));
+  box-shadow: 0 0 40px rgba(96, 165, 250, 0.15);
+  filter: blur(2px);
+}
+
+/* Rectangles */
+.rect {
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+}
+
+/* Triangles */
+.triangle {
+  width: 0;
+  height: 0;
+  background: transparent !important;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 50px solid rgba(167, 139, 250, 0.3);
+  filter: blur(1px);
+}
+
+/* Specific Shapes - Increased movement and speed */
+.s1 { width: 350px; height: 350px; top: -100px; right: -50px; animation: float 18s infinite ease-in-out; }
+.s2 { width: 250px; height: 250px; bottom: 15%; left: -80px; animation: float 22s infinite ease-in-out reverse; }
+.s3 { width: 180px; height: 120px; top: 25%; left: 10%; animation: rotateFloat 28s infinite linear; }
+.s4 { width: 140px; height: 200px; top: 55%; right: 5%; animation: rotateFloat 32s infinite linear reverse; }
+.s5 { top: 35%; left: 35%; animation: float 15s infinite ease-in-out; }
+.s6 { top: 10%; right: 25%; animation: float 17s infinite ease-in-out reverse; }
+
+/* Animation Definitions */
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, 80px) scale(1.1); }
+  66% { transform: translate(-40px, 40px) scale(0.9); }
+}
+
+@keyframes rotateFloat {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(60px, -60px) rotate(180deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes ambient {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+/* Ambient glow blobs */
+.glow {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  filter: blur(140px);
+  z-index: 2;
+  opacity: 0.3;
+}
+
+.glowBlue {
+  background: radial-gradient(circle, #60a5fa 0%, transparent 70%);
+  top: -250px;
+  left: -150px;
+  animation: ambient 12s infinite ease-in-out;
+}
+
+.glowPurple {
+  background: radial-gradient(circle, #a78bfa 0%, transparent 70%);
+  bottom: -250px;
+  right: -150px;
+  animation: ambient 15s infinite ease-in-out 2s;
+}

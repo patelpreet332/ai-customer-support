@@ -1,153 +1,67 @@
-# 🤖 AI Customer Support Chatbot
+# AI Customer Support Platform
 
-A full-stack AI-powered customer support application that provides real-time responses to user queries such as password resets, refunds, orders, payments, and cancellations.
+A high-fidelity, multilingual AI customer support dashboard with real-time sentiment analysis, order tracking, and dynamic visual reactions.
 
----
+## 🚀 Features
 
-## 🚀 Live Demo
-
-* 🌐 Frontend (Vercel): https://ai-customer-support-fbdyygvhk-vilas2809s-projects.vercel.app
-* ⚙️ Backend (Render): https://ai-customer-support-mq3q.onrender.com
-
----
+- **Intelligent AI Orchestration**: Multi-intent detection for tracking, refunds, payments, and general queries.
+- **Sentiment-Driven UI**: 
+  - Dynamic background animation (SaaS-style floating geometric shapes).
+  - **Emotional Emoji Reactions**: Real-time visual feedback (flying emojis) when user tone is detected as Angry, Frustrated, or Urgent.
+- **Multilingual Support**: Real-time language detection and switching (English, Hindi, Gujarati, etc.).
+- **Voice-to-Text**: WhatsApp-style voice input for seamless interaction.
+- **Secure Authentication**: Session-locked dashboard and order data.
+- **Order Management**: Real-time database integration for order status and tracking.
 
 ## 🛠️ Tech Stack
 
-### Frontend
+- **Frontend**: Next.js 15+, TypeScript, Vanilla CSS (Premium Glassmorphism).
+- **Backend**: Node.js, Express, TypeScript, Groq SDK (Llama 3.3).
+- **Database**: MongoDB Atlas.
 
-* Next.js (React)
-* TypeScript
-* CSS / Tailwind (if used)
+## 🏁 Getting Started
 
-### Backend
-
-* FastAPI (Python)
-* Groq API (LLM integration)
-* Pydantic
-* Uvicorn
-
-### Deployment
-
-* Vercel (Frontend)
-* Render (Backend)
-
----
-
-## ✨ Features
-
-* 💬 Real-time AI chat interface
-* 🤖 LLM-powered responses using Groq API
-* 🔗 Full-stack integration (Next.js + FastAPI)
-* 🌐 Deployed on cloud (Vercel + Render)
-* 🔐 CORS-enabled secure API communication
-* ⚡ Fast and responsive UI
-
----
-
-## ⚙️ Setup Instructions
-
-### 1️⃣ Clone the repository
-
-git clone https://github.com/your-username/ai-customer-support.git
+### 1. Clone the repository
+```bash
+git clone <your-repo-url>
 cd ai-customer-support
+```
 
----
-
-### 2️⃣ Backend Setup (FastAPI)
-
-cd backend
-python -m venv venv
-source venv/bin/activate   (Mac/Linux)
-venv\Scripts\activate      (Windows)
-
-pip install -r requirements.txt
-
-#### Create `.env` file
-
-GROQ_API_KEY=your_api_key_here
-FRONTEND_URL=http://localhost:3000
-
-#### Run backend
-
-uvicorn app.main:app --reload
-
----
-
-### 3️⃣ Frontend Setup (Next.js)
-
-cd frontend
+### 2. Backend Setup
+```bash
+cd backend_Node
 npm install
+```
+Create a `.env` file in `backend_Node`:
+```env
+PORT=8000
+MONGO_URI=your_mongodb_uri
+GROQ_API_KEY=your_groq_api_key
+```
+Run backend:
+```bash
 npm run dev
+```
 
----
+### 3. Frontend Setup
+```bash
+cd ../frontend
+npm install
+```
+Run frontend:
+```bash
+npm run dev
+```
 
-## 🔗 API Endpoints
+## 🎨 Visual System
 
-### POST `/chat`
+The application features a premium **AI SaaS aesthetic**:
+- **Background**: Subtle floating gradients and geometric particles.
+- **Glassmorphism**: Translucent chat cards with backdrop blur.
+- **Animations**: 
+  - `flyUpAndFade`: Emojis react to sentiment.
+  - `float`: Ambient movement of background elements.
 
-**Request:**
-{
-"conversation_id": "test123",
-"message": "Hello"
-}
+## 📄 License
 
-**Response:**
-{
-"reply": "Hello. How can I assist you today?"
-}
-
----
-
-## 🚨 CORS Configuration
-
-allow_origins = [
-"https://ai-customer-support-fbdyygvhk-vilas2809s-projects.vercel.app",
-"http://localhost:3000"
-]
-
----
-
-## 📦 Deployment
-
-### Frontend (Vercel)
-
-* Connected GitHub repo
-* Auto deployment enabled
-
-### Backend (Render)
-
-* requirements.txt configured
-* Start command:
-  uvicorn app.main:app --host 0.0.0.0 --port 10000
-
----
-
-## 🧠 Learnings
-
-* Full-stack development with Next.js and FastAPI
-* API integration and async handling
-* Debugging production issues (CORS)
-* Cloud deployment and environment configuration
-* Working with LLM APIs (Groq)
-
----
-
-## 📌 Future Improvements
-
-* 🔐 User authentication (login/signup)
-* 💾 Database integration (store chat history)
-* 🎨 Improved UI/UX (animations, typing effect)
-* 📊 Analytics dashboard
-
----
-
-## 👨‍💻 Author
-
-Vilas Reddy
-GitHub: https://github.com/Vilas2809
-
----
-
-## ⭐️ Show Your Support
-
-If you like this project, give it a ⭐️ on GitHub!
+MIT

@@ -1,31 +1,88 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import EmojiFlyer from "../components/EmojiFlyer";
+import BackgroundAnimation from "../components/BackgroundAnimation";
 
 type ChatMessage = {
   sender: "user" | "ai";
   text: string;
 };
 
-const API_URL =  "https://ai-customer-support-mq3q.onrender.com";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function Home() {
-  const [conversationId , setConversationId] = useState("");
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [conversationId, setConversationId] = useState("");
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
+
+  const [isListening, setIsListening] = useState(false);
+  const [speechLang, setSpeechLang] = useState("en-IN");
+  const recognitionRef = useRef<any>(null);
+
+  const initRecognition = (lang: string) => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      if (recognitionRef.current) recognitionRef.current.stop();
+
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+      recognitionRef.current.lang = lang;
+
+      recognitionRef.current.onresult = (event: any) => {
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            setMessage((prev) => prev + event.results[i][0].transcript);
+          }
+        }
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+      };
+    }
+  };
 
   useEffect(() => {
-      setConversationId(crypto.randomUUID());
-  }, []);
+    const savedUser = localStorage.getItem("user");
+    if (!savedUser) {
+      router.push("/login");
+    } else {
+      setUser(JSON.parse(savedUser));
+    }
+    setConversationId(crypto.randomUUID());
+    initRecognition(speechLang);
+  }, [router, speechLang]);
+
+  const toggleListening = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+    } else {
+      recognitionRef.current?.start();
+      setIsListening(true);
+    }
+  };
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat, loading]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.push("/login");
+  };
+
+  const [activeEmoji, setActiveEmoji] = useState<string | null>(null);
+
   const sendMessage = async () => {
-    if (!message.trim() || loading) return;
+    if (!message.trim() || loading || !user) return;
+    if (isListening) toggleListening(); // Stop listening on send
 
     const currentMessage = message.trim();
 
@@ -42,11 +99,11 @@ export default function Home() {
         body: JSON.stringify({
           conversation_id: conversationId,
           message: currentMessage,
+          user_email: user.email, // Pass the logged-in user's email
         }),
       });
 
       if (!res.ok) {
-        console.error("Backend error:", await res.text());
         throw new Error("Backend request failed");
       }
 
@@ -59,12 +116,33 @@ export default function Home() {
           text: data.reply || "No response from AI.",
         },
       ]);
+
+      // Handle Sentiment-based Emojis
+      if (data.metadata?.sentiment?.emotion) {
+        const emotion = data.metadata.sentiment.emotion;
+        console.log("[SENTIMENT-DEBUG] Emotion detected:", emotion);
+        
+        const emojiMap: Record<string, string> = {
+          anger: "😡",
+          frustration: "😤",
+          urgency: "🚨",
+          disappointment: "😞",
+          sadness: "😢",
+          confusion: "❓",
+          happiness: "✨",
+          satisfaction: "✅"
+        };
+
+        if (emojiMap[emotion]) {
+          setActiveEmoji(emojiMap[emotion]);
+        }
+      }
     } catch (error) {
       setChat((prev) => [
         ...prev,
         {
           sender: "ai",
-          text: "Error connecting to backend. Please make sure the backend is running and deployed correctly.",
+          text: "Error connecting to backend. Please make sure the backend is running.",
         },
       ]);
     } finally {
@@ -78,18 +156,57 @@ export default function Home() {
     }
   };
 
+  if (!user) return null; // Prevent flicker before redirect
+
   return (
     <main className="container">
+      <style jsx>{`
+        @keyframes pulse {
+          0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+          70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+          100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .listening {
+          animation: pulse 1.5s infinite;
+          background: #ef4444 !important;
+        }
+      `}</style>
+      
+      {activeEmoji && (
+        <EmojiFlyer 
+          emoji={activeEmoji} 
+          onComplete={() => setActiveEmoji(null)} 
+        />
+      )}
+      
       <div className="chat-card">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#2563eb", color: "white", display: "flex", alignItems: "center", justifyItems: "center", justifyContent: "center", fontWeight: "bold" }}>
+              {user.name.charAt(0)}
+            </div>
+            <div>
+              <h3 style={{ margin: 0, fontSize: "16px" }}>{user.name}</h3>
+              <p style={{ margin: 0, fontSize: "12px", color: "#6b7280" }}>Online</p>
+            </div>
+          </div>
+          <button
+            onClick={handleLogout}
+            style={{ padding: "8px 14px", borderRadius: "8px", border: "1px solid #d1d5db", background: "white", cursor: "pointer", fontSize: "13px" }}
+          >
+            Logout
+          </button>
+        </div>
+
         <h1 className="heading">AI Customer Support</h1>
         <p className="subheading">
-          Ask questions about password reset, refunds, orders, payments, or cancellations.
+          Welcome back, {user.name.split(' ')[0]}! How can I help you with your orders today?
         </p>
 
         <div className="chat-box">
           {chat.length === 0 && !loading && (
             <p className="placeholder">
-              Try asking: “How do I reset my password?”
+              Try asking: “Where is my recent order?”
             </p>
           )}
 
@@ -114,10 +231,26 @@ export default function Home() {
         </div>
 
         <div className="input-area">
+          <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+            <button
+              onClick={() => setSpeechLang(speechLang === "en-IN" ? "hi-IN" : "en-IN")}
+              style={{ padding: "4px 8px", fontSize: "10px", borderRadius: "4px", border: "1px solid #cbd5e1", background: "white", fontWeight: "bold" }}
+            >
+              {speechLang === "en-IN" ? "EN" : "HI"}
+            </button>
+            <button
+              onClick={toggleListening}
+              className={`send-button ${isListening ? "listening" : ""}`}
+              style={{ background: "#64748b", padding: "12px" }}
+              title="Speak"
+            >
+              {isListening ? "🛑" : "🎤"}
+            </button>
+          </div>
           <input
             type="text"
             value={message}
-            placeholder="Type your question..."
+            placeholder={isListening ? `Listening (${speechLang === "en-IN" ? "English" : "Hindi"})...` : "Type your question..."}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             className="chat-input"
