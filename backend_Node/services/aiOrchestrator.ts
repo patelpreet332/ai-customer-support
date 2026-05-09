@@ -112,7 +112,7 @@ export class AIOrchestrator {
 
   constructor() {
     const key = (process.env.GROQ_API_KEY || '').trim();
-    console.log(`[GROQ-DEBUG] Using API Key: ${key.substring(0, 8)}...${key.substring(key.length - 4)}`);
+    // console.log(`[GROQ-DEBUG] Using API Key: ${key.substring(0, 8)}...${key.substring(key.length - 4)}`);
 
     this.groq = new Groq({
       apiKey: key,
@@ -220,13 +220,13 @@ CORE RULES:
     // Debug Logs
     // ---------------------------------------
 
+    /*
     console.log('\n====================================');
     console.log('FULL AI PAYLOAD');
     console.log('====================================');
-
     console.log(JSON.stringify(messages, null, 2));
-
     console.log('====================================\n');
+    */
 
     // ---------------------------------------
     // AI Completion
@@ -437,14 +437,14 @@ COURIER: ${o.shipping?.courierPartner}
 TRACKING_NUMBER: ${o.shipping?.trackingNumber}
 -------------------`;
         });
-        console.log("--- FACTUAL_DATA (SUMMARY) ---\n", summary);
+        // console.log("--- FACTUAL_DATA (SUMMARY) ---\n", summary);
         return summary;
       }
       order = order[0]; // If only 1 order in array, proceed with single order logic
     }
 
     // ... (rest of the detailed logic)
-    console.log("--- FACTUAL_DATA (DETAILED) ---\n", "Order ID: " + order.orderId);
+    // console.log("--- FACTUAL_DATA (DETAILED) ---\n", "Order ID: " + order.orderId);
 
     const baseInfo = `
 Order ID: ${order.orderId}

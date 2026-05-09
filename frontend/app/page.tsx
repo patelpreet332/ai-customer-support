@@ -120,7 +120,7 @@ export default function Home() {
       // Handle Sentiment-based Emojis
       if (data.metadata?.sentiment?.emotion) {
         const emotion = data.metadata.sentiment.emotion;
-        console.log("[SENTIMENT-DEBUG] Emotion detected:", emotion);
+        // console.log("[SENTIMENT-DEBUG] Emotion detected:", emotion);
         
         const emojiMap: Record<string, string> = {
           anger: "😡",

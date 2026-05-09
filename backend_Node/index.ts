@@ -34,7 +34,7 @@ app.post('/chat', async (req, res) => {
     if (!userMessage) return res.json({ reply: "Message required." });
 
     const id = conversation_id || "default";
-    console.log(`[CHAT] Incoming message from: ${user_email || 'Anonymous'}`);
+    // console.log(`[CHAT] Incoming message from: ${user_email || 'Anonymous'}`);
 
     try {
         let conversation = await Conversation.findOne({ conversation_id: id });
@@ -77,9 +77,9 @@ app.post('/chat', async (req, res) => {
 
             if (orderData && (Array.isArray(orderData) ? orderData.length > 0 : true)) {
                 foundOrder = orderData;
-                console.log(`[SECURITY-LOG] SUCCESS: Secured data retrieved for ${effectiveEmail}`);
+                // console.log(`[SECURITY-LOG] SUCCESS: Secured data retrieved for ${effectiveEmail}`);
             } else {
-                console.log(`[SECURITY-LOG] ACCESS DENIED/NOT FOUND: Query for ${effectiveEmail}`);
+                // console.log(`[SECURITY-LOG] ACCESS DENIED/NOT FOUND: Query for ${effectiveEmail}`);
             }
         }
 

@@ -1,6 +1,7 @@
 {
-  "name": "fronte",
-  "version": "0.1.0",
+  "name": "ai-customer-support-frontend",
+  "version": "1.0.0",
+  "description": "High-fidelity AI Customer Support Dashboard with Real-time Emotional Reactions",
   "private": true,
   "scripts": {
     "dev": "next dev",
