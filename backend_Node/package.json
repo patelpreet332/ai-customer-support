@@ -9,8 +9,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Antigravity AI",
-  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.6",

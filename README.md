@@ -1,4 +1,4 @@
-# 🚀 AI Customer Support Platform 🤖
+# AI Customer Support
 
 [![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
 [![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -8,39 +8,39 @@
 
 ---
 
-### 🌌 Experience the Future of Customer Support
+### Experience the Future of Customer Support
 A sophisticated, high-fidelity AI orchestration system built for the modern ecommerce era. This platform goes beyond simple chat—it understands **emotion**, speaks **multiple languages**, and delivers **secure, factual data** in real-time.
 
 ---
 
-## ✨ Key Capabilities
+## Key Capabilities
 
 | Feature | Description |
 | :--- | :--- |
-| **🧠 Intelligent Orchestration** | Powered by Llama 3.3 for lightning-fast, context-aware reasoning. |
-| **🎭 Sentiment Engine** | Detects tone (Anger, Frustration, Joy) and adapts the AI response accordingly. |
-| **✨ Visual Reactions** | Real-time emoji "fly-aways" triggered by emotional sentiment. |
-| **🌍 Multilingual** | Seamlessly switches between English, Hindi, Gujarati, and more. |
-| **🎙️ Voice Interface** | WhatsApp-style voice-to-text for frictionless user interaction. |
-| **🔒 Session Security** | Strict data isolation—users only access their specific order history. |
+| **Intelligent Orchestration** | Powered by Llama 3.3 for lightning-fast, context-aware reasoning. |
+| **Sentiment Engine** | Detects tone (Anger, Frustration, Joy) and adapts the AI response accordingly. |
+| **Visual Reactions** | Real-time emoji "fly-aways" triggered by emotional sentiment. |
+| **Multilingual** | Seamlessly switches between English, Hindi, Gujarati, and more. |
+| **Voice Interface** | WhatsApp-style voice-to-text for frictionless user interaction. |
+| **Session Security** | Strict data isolation—users only access their specific order history. |
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
-### 💎 Frontend (Next.js 15+)
+### Frontend (Next.js 15+)
 - **Premium UI**: Glassmorphism aesthetic with backdrop-blur effects.
 - **Ambient Motion**: SaaS-style floating geometric background particles.
 - **Real-time Feedback**: Dynamic UI states that react to AI metadata.
 
-### ⚙️ Backend (Node.js & Express)
+### Backend (Node.js & Express)
 - **AI Core**: Groq SDK integration for high-performance LLM execution.
 - **Data Truth**: Factual injection pipeline to eliminate AI hallucinations.
 - **Persistence**: MongoDB Atlas for secure conversation and order storage.
 
 ---
 
-## 🔄 System Workflow
+## System Workflow
 
 ```mermaid
 graph TD
@@ -59,18 +59,7 @@ graph TD
 
 ---
 
-## ⚡ Animation Flow
-
-The platform utilizes a **Metadata-Driven Animation System**:
-
-1. **Detection**: The AI detects emotions like `anger`, `joy`, or `urgency`.
-2. **Metadata**: The backend sends an `emotion` tag back to the frontend.
-3. **Trigger**: The `EmojiFlyer` component intercepts the tag.
-4. **Visual**: CSS-based animations (`flyUpAndFade`) launch high-fidelity emojis across the screen, creating a responsive emotional feedback loop.
-
----
-
-## 🛠️ Quick Start Guide
+## Quick Start Guide
 
 ### 1. Clone & Install
 ```bash
@@ -91,15 +80,14 @@ npm install
 # In backend_Node
 npm run dev
 
-# In a new terminal (root/frontend)
+# In a new terminal
 cd frontend
 npm install
 npm run dev
 ```
-
 ---
 
-## 📊 Environment Reference
+## Environment Reference
 
 ```env
 PORT=8000
@@ -110,17 +98,19 @@ FRONTEND_URL=http://localhost:3000
 
 ---
 
-## 🛡️ Security & Performance
+## Security & Performance
 - **Prompt Guard**: Multi-intent detection limits AI to ecommerce boundaries.
 - **Truth Filtering**: Backend retrieves order data *before* the AI processes the response.
 - **Optimization**: Minimal dependencies for ultra-fast page loads and transitions.
 
 ---
 
-## 📸 Visual Gallery
-> *“High-fidelity screenshots coming soon.”*
-> [Placeholder for stunning UI showcase]
+## Visual Gallery
+![Dashboard View](./screenshots/Screenshot%20from%202026-05-18%2014-47-01.png)
+![Chat Conversation View](./screenshots/Screenshot%20from%202026-05-18%2014-51-27.png)
+![Sentiment & Response View](./screenshots/Screenshot%20from%202026-05-18%2014-55-21.png)
+![Voice Input View](./screenshots/Screenshot%20from%202026-05-18%2014-56-36.png)
+![Multilingual Interaction View](./screenshots/Screenshot%20from%202026-05-18%2014-57-47.png)
 
 ---
-
 
